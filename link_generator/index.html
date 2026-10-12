@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Link Generator - Configuration</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <h1>Link Generator</h1>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 0a8 8 0 1 0 8 8A8.009 8.009 0 0 0 8 0Zm0 14.5a6.5 6.5 0 0 1 0-13v13Z" fill="currentColor" />
+          </svg>
+          <span id="themeLabel">Dark</span>
+        </button>
+      </div>
+      <p class="subtitle">
+        Create profiles and configure how links are generated
+      </p>
+    </header>
+
+    <nav class="nav">
+      <a class="nav-btn active" href="index.html">Configuration &amp; Profiles</a>
+      <a class="nav-btn" id="usageNav" href="pages/usage.html">Generate Links</a>
+    </nav>
+
+    <div id="errorBox" class="error hidden"></div>
+
+    <main>
+      <section class="card" id="profilesPanel">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Profiles</div>
+            <div class="card-subtitle">Choose a profile to edit or create a new one</div>
+          </div>
+          <div class="stats">
+            <span class="stat-item" id="profilesCount">0 profiles</span>
+          </div>
+        </div>
+        <details style="margin: 0 0 18px">
+          <summary style="cursor: pointer; font-weight: 600">Configure folders</summary>
+          <div class="card-subtitle" style="margin: 6px 0 12px">Create, rename, or delete profile folders. Deleting a folder moves its profiles to the default folder.</div>
+          <div class="actions">
+            <input type="text" id="newFolderName" placeholder="New folder name" aria-label="New folder name" style="max-width: 320px">
+            <button type="button" id="addFolderBtn">Add Folder</button>
+          </div>
+          <div id="foldersList" style="margin-top: 12px"></div>
+        </details>
+        <div id="profilesList"></div>
+        <div class="actions" style="margin-top: 14px">
+          <button id="newProfileBtn" class="btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" fill="currentColor" />
+            </svg>
+            New Profile
+          </button>
+        </div>
+      </section>
+
+      <section id="profileEditor" class="hidden">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title" id="editorHeading">New Profile</div>
+              <div class="card-subtitle">Set up this profile and save it when you're done</div>
+            </div>
+            <button id="cancelProfileBtn" class="btn-secondary" type="button">Back to Profiles</button>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="profileTitle">Profile Title *</label>
+              <input type="text" id="profileTitle" placeholder="e.g., Payments" autocomplete="off" />
+            </div>
+            <div class="form-group">
+              <label for="profileFolder">Folder</label>
+              <select id="profileFolder"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="profileDesc">Profile Description</label>
+            <textarea id="profileDesc" maxlength="255" rows="3" placeholder="Describe what this profile is for, e.g. Search member and payment records by phone number." autocomplete="off"></textarea>
+            <div class="helper-text"><span id="profileDescCount">0</span>/255 characters</div>
+          </div>
+          <div class="actions">
+          <button id="saveProfileBtn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z" fill="currentColor" />
+            </svg>
+            Save / Update
+          </button>
+          </div>
+        </div>
+
+        <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Configuration</div>
+            <div class="card-subtitle">
+              Set base URL, tokens and their value behavior
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="baseUrlMode">Base URL Mode</label>
+          <select id="baseUrlMode">
+            <option value="single">Single link</option>
+            <option value="multi">Multiple links</option>
+          </select>
+          <div id="singleBaseUrlField" style="margin-top: 10px">
+            <label for="baseUrlSingle">Base URL</label>
+            <input type="text" id="baseUrlSingle" placeholder="https://example.com/path?key={TOKEN}&amp;other=..." autocomplete="off" spellcheck="false" />
+          </div>
+          <div id="multiBaseUrlsField" class="hidden" style="margin-top: 10px">
+            <label>Base URLs</label>
+            <div id="baseUrlRows"></div>
+            <button type="button" id="addBaseUrlBtn" class="btn-secondary" style="margin-top: 8px">+ Add Base URL</button>
+          </div>
+          <div class="helper-text">
+            Use the same token placeholders in one URL or multiple URLs. In multiple-link mode, enter one URL per line.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="token">Token Placeholder</label>
+          <input type="text" id="token" placeholder="{TOKEN}" autocomplete="off" spellcheck="false" />
+          <div class="helper-text">
+            Primary token field (auto-syncs with token list)
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Tokens</label>
+          <div id="tokensList"></div>
+          <div class="actions" style="margin-top: 8px">
+            <button id="addTokenBtn" class="btn-secondary" type="button">
+              Add Token
+            </button>
+            <button id="clearTokensBtn" class="btn-secondary" type="button">
+              Clear All
+            </button>
+          </div>
+          <div class="helper-text">
+            Each token can be configured below with its own value mode
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Per-Token Value Configuration</label>
+          <div id="tokenConfigContainer"></div>
+          <div class="helper-text">
+            fixed = value set here. predefined = list in config. userInput =
+            entered in Usage page.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="openInNewTab">Link Behavior</label>
+          <label style="
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+                font-weight: 400;
+              ">
+            <input type="checkbox" id="openInNewTab" checked style="width: 14px; height: 14px; cursor: pointer" />
+            <span style="font-size: 13px">Open generated links in new tab</span>
+          </label>
+          <div class="helper-text">Adds target="_blank" rel="noopener noreferrer"</div>
+        </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>Link Generator • Configuration &amp; Profiles</footer>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
