@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link Generator - Generate Links</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <h1>Generate Links</h1>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+          <span aria-hidden="true">◐</span>
+          <span id="themeLabel">Dark</span>
+        </button>
+      </div>
+      <p class="subtitle">Choose a profile, enter the values you need, and get ready-to-use links.</p>
+    </header>
+
+    <nav class="nav">
+      <a href="../index.html">Configuration &amp; Profiles</a>
+      <a class="active" href="usage.html">Generate Links</a>
+    </nav>
+
+    <div id="errorBox" class="error hidden" role="alert"></div>
+
+    <section class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Profile</div>
+          <div class="helper">Profiles are loaded from browser storage or passed from the configuration page.</div>
+        </div>
+        <div class="actions">
+          <button type="button" class="secondary" id="importProfileBtn">Import JSON</button>
+          <input type="file" id="importProfileInput" accept="application/json" class="hidden">
+        </div>
+      </div>
+      <label for="folderSelect">Folder</label>
+      <select id="folderSelect">
+        <option value="*">All folders</option>
+      </select>
+      <label for="profileSelect" style="margin-top: 12px">Profile</label>
+      <select id="profileSelect">
+        <option value="">-- Select Profile --</option>
+      </select>
+      <div id="profileAvailability" class="helper hidden" style="margin-top: 8px" role="status"></div>
+      <div id="profileInfo" class="profile-info hidden">
+        <div class="card-title" id="profileTitle"></div>
+        <div id="profileDescription" class="profile-description"></div>
+        <div id="profileFolder" class="profile-description"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Inputs</div>
+          <div class="helper">Enter one value per line for combinations, or a single value where configured.</div>
+        </div>
+      </div>
+      <div id="inputsContainer" class="helper">Select a profile to show its inputs.</div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Ready Links</div>
+          <div class="helper">Multiple input lists are combined automatically.</div>
+        </div>
+        <div class="stats" id="linkStats">0 iterations · 0 links</div>
+      </div>
+      <div class="actions" style="margin-bottom: 14px">
+        <button id="generateBtn" type="button">Generate Links</button>
+        <button id="copyAllBtn" type="button" class="secondary" disabled>Copy All Iterations</button>
+        <button id="clearBtn" type="button" class="secondary">Clear</button>
+      </div>
+      <div id="output"></div>
+    </section>
+    <footer>Link Generator • Usage</footer>
+  </div>
+
+  <script src="usage.js" defer></script>
+</body>
+</html>
